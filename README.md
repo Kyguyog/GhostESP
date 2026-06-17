@@ -1,4 +1,4 @@
-I made this fork to fix my Freenove ESP32-S3-WROOM's SD Card, I did use AI, It seems to work now
+I made this fork to fix my Freenove ESP32-S3-WROOM's SD Card, I did use AI, It seems to work now, I only updated the "two-point-zero" branch
 
 
 <img width="800" alt="ghostesp_white_text_logo2" src="https://github.com/user-attachments/assets/f2cb3bb4-ab79-4679-8db1-beddc306ba07" />
