@@ -473,8 +473,13 @@ esp_err_t sd_card_init(void) {
 #ifdef CONFIG_USING_MMC_1_BIT
   printf("Initializing SD card in SDMMC mode (1-bit) using configured pins...\n");
 
+  // Give the power rail and card controller time to settle before the
+  // SDMMC handshake begins during boot.
+  vTaskDelay(pdMS_TO_TICKS(500));
+
   sdmmc_host_t host = SDMMC_HOST_DEFAULT();
   host.flags = SDMMC_HOST_FLAG_1BIT;
+  host.max_freq_khz = SDMMC_FREQ_PROBING;
 
   sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
   slot_config.width = 1;
@@ -528,6 +533,10 @@ esp_err_t sd_card_init(void) {
 
   printf("Initializing SD card in SDMMC mode (4-bit) using configured pins...\n");
 
+  // Give the power rail and card controller time to settle before the
+  // SDMMC handshake begins during boot.
+  vTaskDelay(pdMS_TO_TICKS(500));
+
   sdmmc_host_t host = SDMMC_HOST_DEFAULT();
   sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
 
@@ -539,6 +548,7 @@ esp_err_t sd_card_init(void) {
   slot_config.d3 = sd_card_manager.d3pin;   // SDMMC_D3  -> GPIO 18
 
   host.flags = SDMMC_HOST_FLAG_4BIT;
+  host.max_freq_khz = SDMMC_FREQ_PROBING;
 
   gpio_set_pull_mode(sd_card_manager.clkpin, GPIO_PULLUP_ONLY); // CLK
   gpio_set_pull_mode(sd_card_manager.cmdpin, GPIO_PULLUP_ONLY); // CMD
