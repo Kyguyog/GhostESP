@@ -490,6 +490,10 @@ esp_err_t sd_card_init(void) {
   slot_config.gpio_cd = GPIO_NUM_NC; // Disable Card Detect pin
   slot_config.gpio_wp = GPIO_NUM_NC; // Disable Write Protect pin
 
+  gpio_pullup_en(GPIO_NUM_38);
+  gpio_pullup_en(GPIO_NUM_39);
+  gpio_pullup_en(GPIO_NUM_40);
+
   esp_vfs_fat_sdmmc_mount_config_t mount_config = {
       .format_if_mount_failed = false,
       .max_files = 5,
